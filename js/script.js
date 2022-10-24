@@ -1,3 +1,10 @@
+// **Consegna**
+// Facciamo funzionare il carousel, oltre che con i bottoni anche in autoplay al caricamento della pagina.
+// **BONUS:**
+// Passando con il mouse sopra le immagini l’autoplay si ferma per poi ripartire quando il mouse esce dallo slider
+// Buon lavoro!
+
+
 const imageArray = [
   "01.jpg",
   "02.jpg",
@@ -36,36 +43,25 @@ btnUp.addEventListener("click", function() {
   slider("up");
 });
 
+
 function slider(direction) {
   imagesList[counterImages].classList.remove("active");
   thumbList[counterImages].classList.remove("active");
   if (direction === "up") {
-    counterImages--;
-  } else {
-    counterImages++;
-  } 
-  counterImages = ((counterImages + imagesList.length) % imagesList.length);
+      counterImages--;
+      if (counterImages < 0 ) {
+        counterImages = (imagesList.length - 1);
+      } 
+  } else if (direction === "down") {
+      counterImages++;
+      if (counterImages >= imagesList.length) {
+        counterImages = 0;
+      }
+  }
   imagesList[counterImages].classList.add("active");
   thumbList[counterImages].classList.add("active");
 }
 
-// // MODALITÀ ESTESA SENZA MODULO E FUNZIONE
-// btnDown.addEventListener("click", function() {
-//   imagesList[counterImages].classList.remove("active");
-//   thumbList[counterImages++].classList.remove("active");
-//   if (counterImages >= imagesList.length) {
-//     counterImages = 0;
-//   }
-//   imagesList[counterImages].classList.add("active");
-//   thumbList[counterImages].classList.add("active");
-// })
-
-// btnUp.addEventListener("click", function() {
-//   imagesList[counterImages].classList.remove("active");
-//   thumbList[counterImages--].classList.remove("active");
-//   if (counterImages < 0 ) {
-//     counterImages = (imagesList.length - 1);
-//   }
-//   imagesList[counterImages].classList.add("active");
-//   thumbList[counterImages].classList.add("active");
-// })
+setInterval(function() {
+  slider("down")
+}, 1500);
