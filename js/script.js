@@ -1,10 +1,3 @@
-// **Consegna**
-// Facciamo funzionare il carousel, oltre che con i bottoni anche in autoplay al caricamento della pagina.
-// **BONUS:**
-// Passando con il mouse sopra le immagini l’autoplay si ferma per poi ripartire quando il mouse esce dallo slider
-// Buon lavoro!
-
-
 const imageArray = [
   "01.jpg",
   "02.jpg",
@@ -14,6 +7,7 @@ const imageArray = [
 ];
 
 let imagesTags = "";
+const sliderWrap = document.querySelector(".slider");
 const sliderBox = document.getElementById("items-wrapper");
 const thumbBox = document.querySelector(".thumb-slider");
 for (let i = 0; i < imageArray.length; i++) {
@@ -34,7 +28,6 @@ thumbList[counterImages].classList.add("active");
 const btnUp = document.querySelector(".btn-arrow.up");
 const btnDown = document.querySelector(".btn-arrow.down");
 
-// MODALITÀ COMPATTA CON MODULO E FUNZIONE
 btnDown.addEventListener("click", function() {
   slider("down");
 });
@@ -42,7 +35,6 @@ btnDown.addEventListener("click", function() {
 btnUp.addEventListener("click", function() {
   slider("up");
 });
-
 
 function slider(direction) {
   imagesList[counterImages].classList.remove("active");
@@ -62,6 +54,16 @@ function slider(direction) {
   thumbList[counterImages].classList.add("active");
 }
 
-setInterval(function() {
+let clock = setInterval(function() {
   slider("down")
 }, 1500);
+
+sliderWrap.addEventListener("mouseover", function() {
+  clearInterval(clock);
+});
+
+sliderWrap.addEventListener("mouseout", function() {
+  clock = setInterval(function() {
+    slider("down")
+  }, 1500);
+});
