@@ -7,9 +7,16 @@ const imageArray = [
 ];
 
 let imagesTags = "";
+const btnUp = document.querySelector(".btn-arrow.up");
+const btnDown = document.querySelector(".btn-arrow.down");
 const sliderWrap = document.querySelector(".slider");
 const sliderBox = document.getElementById("items-wrapper");
 const thumbBox = document.querySelector(".thumb-slider");
+let counterImages = 0;
+let clock = setInterval(function() {
+  slider("down")
+}, 1500);
+
 for (let i = 0; i < imageArray.length; i++) {
   imagesTags += `
   <img class="" src="img/${imageArray[i]}" alt="${imageArray[i]}"</img>
@@ -18,15 +25,11 @@ for (let i = 0; i < imageArray.length; i++) {
 sliderBox.innerHTML = imagesTags;
 thumbBox.innerHTML = imagesTags;
 
-imagesList = document.querySelectorAll("#items-wrapper img");
-thumbList = document.querySelectorAll(".thumb-slider img");
-let counterImages = 0;
+const imagesList = document.querySelectorAll("#items-wrapper img");
+const thumbList = document.querySelectorAll(".thumb-slider img");
+
 imagesList[counterImages].classList.add("active");
 thumbList[counterImages].classList.add("active");
-
-
-const btnUp = document.querySelector(".btn-arrow.up");
-const btnDown = document.querySelector(".btn-arrow.down");
 
 btnDown.addEventListener("click", function() {
   slider("down");
@@ -34,6 +37,16 @@ btnDown.addEventListener("click", function() {
 
 btnUp.addEventListener("click", function() {
   slider("up");
+});
+
+sliderWrap.addEventListener("mouseover", function() {
+  clearInterval(clock);
+});
+
+sliderWrap.addEventListener("mouseout", function() {
+  clock = setInterval(function() {
+    slider("down")
+  }, 1500);
 });
 
 function slider(direction) {
@@ -53,17 +66,3 @@ function slider(direction) {
   imagesList[counterImages].classList.add("active");
   thumbList[counterImages].classList.add("active");
 }
-
-let clock = setInterval(function() {
-  slider("down")
-}, 1500);
-
-sliderWrap.addEventListener("mouseover", function() {
-  clearInterval(clock);
-});
-
-sliderWrap.addEventListener("mouseout", function() {
-  clock = setInterval(function() {
-    slider("down")
-  }, 1500);
-});
